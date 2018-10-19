@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Lista de tareas</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <style>
+    .done{
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+
+  <section class="container">
+    <div class="row" id="showTasks">
+      <article>
+        <h5 class="center-align">Agregar tareas</h5>
+        <form v-on:submit.prevent="addTask" class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="text" id="title-task" class="validate" placeholder="Título" v-model="tasks.title">
+            </div>
+            <div class="input-field col s12">
+              <textarea id="description-task" class="materialize-textarea" placeholder="Descripción" v-model="tasks.description"></textarea>
+            </div>
+            <div class="input-field col s12">
+              <button class="btn col s12">Enviar</button>
+            </div>
+          </div>
+        </form>
+      </article>
+
+      <article class="col s12">
+        <h5 class="center-align">Mostrar tareas</h5>
+        <table class="highlight">
+          <thead>
+            <tr>
+              <th>Tarea</th>
+              <th>Descripción</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="task in tasks">
+              <td>
+                <p>
+                  <label>
+                    <input type="checkbox" v-model="task.done">
+                    <span v-bind:class="{done:task.done}">{{task.title}}</span>
+                  </label>
+                </p>
+              </td>
+              <td v-bind:class="{done:task.done}">{{task.description}}</td>
+              <td><button class="btn col s12" v-bind:key="task.id" v-on:click="deleteTask(task.id)">Eliminar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+  </section>
+  <script src="index.js"></script>
+</body>
+</html>
